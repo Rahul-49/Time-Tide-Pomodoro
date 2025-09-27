@@ -122,45 +122,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Production: Serve React build files
-if (process.env.NODE_ENV === 'production') {
-  // Serve static files from React build
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-  
-  // Handle React routing - send all non-API requests to React
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-  });
-} else {
-  // Development: API-only server (React runs separately on port 3001)
-  app.get('/', (req, res) => {
-    res.json({ 
-      message: '🚀 TimeTide API Server is running!',
-      frontend: 'React app should be running on http://localhost:3001',
-      api: `API available at http://localhost:${PORT}/api`,
-      endpoints: [
-        'GET /api/health - Health check',
-        'POST /api/auth/login - User login',
-        'POST /api/auth/register - User registration',
-        'GET /api/auth/check - Check authentication',
-        'POST /api/auth/logout - User logout',
-        'GET /api/sessions - Get user sessions',
-        'POST /api/sessions - Create new session',
-        'PUT /api/sessions/:id/complete - Complete session',
-        'GET /api/sessions/analytics - Get analytics',
-        'GET /api/weather?lat=&lon= - Get weather data'
-      ]
-    });
-  });
-  
-  // Catch-all for non-API routes in development
   app.get('*', (req, res) => {
     res.status(404).json({ 
       error: 'Route not found', 
       message: 'This is the API server. React app should be running on port 3001.' 
     });
   });
-}
 
 // Error handling middleware
 app.use((err, req, res, next) => {
