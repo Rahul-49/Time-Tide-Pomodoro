@@ -2,14 +2,13 @@
   "name": "timetide",
   "version": "1.0.0",
   "description": "Time management app with Pomodoro timers",
-  "main": "backend/server.js",
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "client": "cd frontend && npm run dev",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build": "cd frontend && npm run build",
-    "install-client": "cd frontend && npm install"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
